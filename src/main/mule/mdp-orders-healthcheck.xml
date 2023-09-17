@@ -21,7 +21,14 @@ vars.loggingVars update {
 		</ee:transform>
 		<flow-ref doc:name="common-flow-start-logging-subflow" doc:id="ff9514b0-29ec-4e40-ad7f-12c5dfab7e86" name="common-flow-start-logging-subflow"/>
 		<flow-ref doc:name="common-before-request-logging-subflow" doc:id="c8c008ff-69bf-48c2-a81d-3dfac225a965" name="common-before-request-logging-subflow"/>
-		<http:request method="GET" doc:name="healthCheckRequest" doc:id="8705eb78-c5a8-4cd7-9019-815bec9bf4e7" config-ref="Orders_Sys_Request" path="${mdpOrdersSysApi.healthCheck}" sendCorrelationId="ALWAYS" correlationId="#[correlationId]"/>
+		<http:request method="GET" doc:name="healthCheckRequest" doc:id="8705eb78-c5a8-4cd7-9019-815bec9bf4e7" config-ref="Orders_Sys_Request" path="${mdpOrdersSysApi.healthCheck}" sendCorrelationId="ALWAYS" correlationId="#[correlationId]">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : 1234,
+	"client_id" : 1234
+}]]]></http:headers>
+		</http:request>
 		<ee:transform doc:name="healthCheckResponse" doc:id="20640a87-2ccc-4cb3-a05e-10c932d34eb6">
 			<ee:message>
 				<ee:set-payload><![CDATA[%dw 2.0

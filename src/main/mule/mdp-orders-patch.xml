@@ -21,7 +21,14 @@ vars.loggingVars update {
 		</ee:transform>
 		<flow-ref doc:name="common-flow-start-logging-subflow" doc:id="cd406202-a363-4b26-847b-508d01c85738" name="common-flow-start-logging-subflow"/>
 		<flow-ref doc:name="common-before-request-logging-subflow" doc:id="b6811015-a040-49f8-a1fd-1e1dc7acf890" name="common-before-request-logging-subflow"/>
-		<http:request method="PATCH" doc:name="requestToOrdersSysApi" doc:id="8f2990de-d3ad-4fda-9d18-f072ccbf6b5f" config-ref="Orders_Sys_Request" path="${mdpOrdersSysApi.path}" sendCorrelationId="ALWAYS" correlationId="#[correlationId]"/>
+		<http:request method="PATCH" doc:name="requestToOrdersSysApi" doc:id="8f2990de-d3ad-4fda-9d18-f072ccbf6b5f" config-ref="Orders_Sys_Request" path="${mdpOrdersSysApi.path}" sendCorrelationId="ALWAYS" correlationId="#[correlationId]">
+			<http:headers ><![CDATA[#[output application/java
+---
+{
+	"client_secret" : 1234,
+	"client_id" : 1234
+}]]]></http:headers>
+		</http:request>
 		<ee:transform doc:name="responseToJson" doc:id="6cacc726-4606-4a47-83f5-12cfdffb3cc7" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0

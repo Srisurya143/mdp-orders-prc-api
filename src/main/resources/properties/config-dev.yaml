@@ -1,7 +1,7 @@
 mdpOrdersSysApi:
   host: "localhost"
   port: "8082"
-  baseUrl: "/v1"
+  baseUrl: "/api"
   path: "/orders"
   ping: "/ping"
   healthCheck: "/healthcheck"
