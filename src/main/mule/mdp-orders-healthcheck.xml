@@ -35,27 +35,25 @@ vars.loggingVars update {
 output application/json
 ---
 {
-                "message": "OK",
-                "appName": "mdp-orders-exp-api is reachable",
-                "failed": false,
-                "systems": [
-                  {
-                    "appName": "mdp-orders-prc-api",
-                    "failed": false,
-                    "status": "mdp-orders-prc-api is reachable"
-                  },
-                   {
-                    "appName": "mdp-orders-sys-api",
-                    "failed": false,
-                    "status": "mdp-orders-sys-api is reachable"
-                  },
-                   {
-                    "system": "salesforce",
-                    "status": "salesforce is reachable",
-                    "code": 200
-                  }
-                ],
+                "message": Mule::p('healthCheck.ok'),
+                "reason": Mule::p('healthCheck.reason'),
+                "response": {
+                	"application": Mule::p('api.Name'),
+                	"buildVersion": Mule::p('api.Version'),
+                	"buildTimeStamp": now(),
+                	"code": if(payload.response.systems.code contains "ERROR") Mule::p('healthCheck.systems.error') else Mule::p('healthCheck.okCode'),
+                	"failed": if(payload.response.systems.code contains "ERROR") false else true,
+                	"host":  Mule::p('healthCheck.host'),
+                	"tire": p('mule.env'),
+                    "systems":payload.response.systems ++ [{
+                  	"code": if(payload.response == "ERROR") "ERROR" else "OK",
+                  	"message": if(payload.response == false) Mule::p('healthCheck.isReachable') else Mule::p('healthCheck.isNotReachable'), 
+                    "name": Mule::p('healthCheck.appName')
+                    
+                    }],
                 "status": "200" 
+               }
+             
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>

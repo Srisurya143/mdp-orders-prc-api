@@ -11,7 +11,19 @@ flowName:
   "pingSubflow": "mdp-orders-ping-subflow"
   "healthCheckSubflow": "mdp-orders-healthcheck-subflow"
   "getOrdersByIdSubflow": "mdp-orders-getid-subflow"
-  
+
+healthCheck:
+  reason: "Health Check"
+  ok: "OK"
+  okCode: "OK"
+  host: "localhost"
+  appName: "mdp-orders-sys-api"
+  isReachable: "mdp-orders-sys-api is reachable"
+  isNotReachable: "mdp-orders-sys-api is not reachable"
+  systems:
+    okCode: "OK"
+    error: "ERROR"    
+      
 httpRetry:
   frequency: "2000"
   attempts: "3"
